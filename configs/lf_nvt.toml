@@ -1,0 +1,21 @@
+[system]
+n_particles = 5
+box = [10.0, 10.0, 10.0]
+atoms = ["H", "He"]
+
+[forces]
+type = "lennard_jones"
+epsilon = 1.0
+sigma = 1.0
+
+[integrator]
+type = "velocity_verlet"
+dt = 0.005
+
+[thermostat]
+type = "berendsen"
+temperature = 1.0
+tau = 0.1
+
+[run]
+steps = 100000
