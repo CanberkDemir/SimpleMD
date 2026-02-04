@@ -18,6 +18,13 @@ def createAseSystem(config):
     return system
 
 def initializeMd(system, config):
+    kb = 1
+    kinEnergy = 1.5*kb*config["system"]["temperature"]*config["system"]["n_particles"]
+    masses = system.get_masses()
+    min_distance = 0
+    while min_distance < 1:
+    # First make the distances between particles at least 'sigma'
+    # Then make their velocities equilibriated
     return None
 
 def main():
@@ -25,3 +32,6 @@ def main():
     system = createAseSystem(cfg)
     print(system)
     print(cfg)
+    print(system.get_masses())
+    print(system.get_positions())
+    print(system.get_distances("))

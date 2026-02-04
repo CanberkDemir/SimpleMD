@@ -2,6 +2,7 @@
 n_particles = 5
 box = [10.0, 10.0, 10.0]
 atoms = ["H", "He"]
+temperature = 298
 
 [forces]
 type = "lennard_jones"

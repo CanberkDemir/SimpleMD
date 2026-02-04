@@ -5,3 +5,6 @@ Summary: Modular molecular dynamics engine using ASE
 Requires-Python: >=3.11
 Description-Content-Type: text/markdown
 Requires-Dist: ase
+
+Simple Molecular Dynamics (MD) program for self-learning
+- Currently Work in Progress

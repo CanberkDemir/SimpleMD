@@ -1,3 +1,4 @@
+README.md
 pyproject.toml
 src/mdsim/__init__.py
 src/mdsim/cli.py
@@ -9,4 +10,5 @@ src/mdsim.egg-info/requires.txt
 src/mdsim.egg-info/top_level.txt
 src/mdsim/engine/__init__.py
 src/mdsim/engine/init_sim.py
+src/mdsim/io/__init__.py
 src/mdsim/io/read_config.py
