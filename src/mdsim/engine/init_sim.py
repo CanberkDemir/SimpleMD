@@ -3,7 +3,7 @@ from ase.calculators.lj import LennardJones
 from mdsim.io.read_config import load_config
 import numpy as np
 
-def createAseSystem(config):
+def createAseSystem(config) -> Atoms:
     system = Atoms(config['system']['atoms'], 
                  cell=config['system']['box'], 
                  pbc=[1, 1, 1]
@@ -19,12 +19,14 @@ def createAseSystem(config):
 
 def initializeMd(system, config):
     kb = 1
-    kinEnergy = 1.5*kb*config["system"]["temperature"]*config["system"]["n_particles"]
+    kinEnergy = 1.5*kb*config["system"]["temperature"]*len(system)
     masses = system.get_masses()
+    # Set distance
     min_distance = 0
-    while min_distance < 1:
-    # First make the distances between particles at least 'sigma'
-    # Then make their velocities equilibriated
+    while min_distance < config["forces"]["sigma"]:
+        system.set_scaled_positions(np.random.rand(len(system),3))
+        for i in range(len(system)):
+            print(i)
     return None
 
 def main():
@@ -32,6 +34,5 @@ def main():
     system = createAseSystem(cfg)
     print(system)
     print(cfg)
-    print(system.get_masses())
     print(system.get_positions())
-    print(system.get_distances("))
+    print(system.get_distances())
