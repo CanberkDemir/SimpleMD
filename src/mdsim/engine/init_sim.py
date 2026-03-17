@@ -17,22 +17,50 @@ def createAseSystem(config) -> Atoms:
         system.calc = lj_instance
     return system
 
-def initializeMd(system, config):
+def vectorSum(vectorArray) -> np.ndarray:
+    # The vector should be in the shape array(n,3)
+    newArray = np.array()
+    for i in vectorArray:
+        num = np.sqrt(np.sum(np.power(i,2)))
+        np.concatenate((newArray, np.array(num)), axis=None)
+    return newArray
+
+def setInitialPosition(system, config) -> Atoms:
+    minDist = 0
+    while minDist < config["forces"]["sigma"]:
+        system.rattle()
+        for i in range(len(system)):
+            distance = system.get_distances(i, range(len(system)), mic=True)
+            if float(0) in distance:
+                zeroarr = np.array([0])
+                distance = np.setdiff1d(distance, zeroarr)
+            if min(distance) > minDist:
+                minDist = min(distance) 
+    return system
+
+def setInitialVelocity(system, config) -> Atoms:
     kb = 1
     kinEnergy = 1.5*kb*config["system"]["temperature"]*len(system)
     masses = system.get_masses()
-    # Set distance
-    min_distance = 0
-    while min_distance < config["forces"]["sigma"]:
-        system.set_scaled_positions(np.random.rand(len(system),3))
-        for i in range(len(system)):
-            print(i)
-    return None
+    boolLogic = True
+    while boolLogic:
+        system.set_velocities(np.random.rand(len(system),3))
+        vel = system.get_velocities()
+        print(vel)
+        velSum = vectorSum(vel)
+        print(velSum)
+        kinEnergyrvel = np.sum(masses*np.power(velSum,2)/2)
+        print(kinEnergy_vel)
+    return system
+
+def initMD(system, config) -> Atoms:
+    system = setInitialPosition(system, config)
+    system = setInitialVelocity(system, config)
+    return system
 
 def main():
     cfg = load_config('configs/lf_nvt.toml')
     system = createAseSystem(cfg)
     print(system)
     print(cfg)
-    print(system.get_positions())
-    print(system.get_distances())
+    #system = initMD(system, cfg)
